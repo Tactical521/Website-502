@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gaming — Portfolio</title>
+<style>
+/* Reset */
+* { margin:0; padding:0; box-sizing:border-box; font-family: Inter, system-ui, sans-serif; }
+body { background:#111; color:white; overflow-x:hidden; min-height: 100vh; position: relative; padding-bottom: 140px; }
+
+/* Background */
+.bg {
+  position: fixed; inset:0;
+  background: url('https://media.discordapp.net/attachments/1456861175470886993/1457141436800831488/image0.jpg?ex=695aec36&is=69599ab6&hm=41307053e18407bec25848697b680e01d083da7539a0802490492e92e7a31cfd&=&format=webp&width=1181&height=788') center/cover no-repeat;
+  filter: blur(2px) brightness(0.6);
+  z-index:-3;
+}
+
+/* Animated shapes */
+.circle { position:absolute; border-radius:50%; background:linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08)); animation: float 30s linear infinite; }
+.c1 { width:200px; height:200px; top:10%; left:15%; animation-delay:0s; }
+.c2 { width:260px; height:260px; top:40%; left:70%; animation-delay:5s; }
+.c3 { width:120px; height:120px; top:60%; left:25%; animation-delay:10s; }
+.c4 { width:160px; height:160px; top:20%; left:50%; animation-delay:15s; }
+
+@keyframes float { 0%{transform:translateY(0) translateX(0) rotate(0deg);} 50%{transform:translateY(-30px) translateX(20px) rotate(180deg);} 100%{transform:translateY(0) translateX(0) rotate(360deg);} }
+
+/* Card */
+.card { width:100%; max-width:450px; margin:80px auto 40px auto; padding:40px 30px; text-align:center; border-radius:25px; backdrop-filter:blur(16px); border:2px solid transparent; background: linear-gradient(#111,#111) padding-box, linear-gradient(135deg,#ff6ec4,#7873f5,#42e695) border-box; animation:fadeUp 1s ease forwards; display:flex; flex-direction:column; min-height:480px; }
+
+.fade-in { opacity:0; animation:fadeUp 1s forwards; }
+.fade-in-delay { opacity:0; animation:fadeUp 1s forwards; animation-delay:0.3s; }
+
+@keyframes fadeUp { 0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
+
+.pfp { width:120px; height:120px; border-radius:50%; border:3px solid rgba(255,255,255,0.6); object-fit:cover; margin-bottom:16px; align-self:center; }
+.glow { box-shadow:0 0 20px rgba(255,255,255,0.4); transition:0.3s; }
+.glow:hover { box-shadow:0 0 30px rgba(255,110,196,0.8); transform:scale(1.05); }
+
+h1 { font-size:2.7rem; font-weight:700; }
+.role { font-size:1rem; opacity:0.7; margin-top:4px; margin-bottom:20px; }
+.desc { font-size:1rem; line-height:1.6; opacity:0.85; margin-bottom:30px; }
+
+/* Work Section */
+.work-section { max-width:960px; margin:0 auto 60px auto; text-align:center; padding:40px 20px; }
+.work-section h2 { font-size:2.2rem; margin-bottom:30px; }
+.work-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; justify-items:center; }
+
+.work-item { width:100%; max-width:260px; background: linear-gradient(#111,#111) padding-box, linear-gradient(135deg,#ff6ec4,#7873f5,#42e695) border-box; border-radius:20px; overflow:hidden; border:2px solid transparent; backdrop-filter:blur(10px); transition: transform 0.4s, box-shadow 0.4s; }
+.work-item img { width:100%; display:block; transition:0.4s; }
+.work-item:hover img { transform:scale(1.05) rotate(1deg); }
+.work-item p { padding:10px; font-size:0.95rem; opacity:0.85; }
+.work-item:hover { transform:translateY(-5px); box-shadow:0 15px 25px rgba(0,0,0,0.5); }
+
+/* Fixed Links */
+.fixed-links { position:fixed; bottom:50px; left:50%; transform:translateX(-50%); display:flex; gap:20px; background:rgba(17,17,17,0.85); padding:12px 25px; border-radius:40px; border:2px solid transparent; background:linear-gradient(#111,#111) padding-box, linear-gradient(135deg,#ff6ec4,#7873f5,#42e695) border-box; box-shadow:0 0 25px rgba(255,110,196,0.7); z-index:1000; backdrop-filter:blur(8px); }
+.fixed-links a { display:flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; text-decoration:none; color:white; font-size:1rem; font-weight:600; transition: all 0.3s ease; }
+.fixed-links a:hover { color:#111; background:white; box-shadow:0 0 30px rgba(255,110,196,1); transform:scale(1.05); }
+.btn-logo { width:24px; height:24px; object-fit:contain; transition:0.3s; }
+
+.footer-info { position:fixed; bottom:10px; left:50%; transform:translateX(-50%); color:white; font-size:0.9rem; opacity:0.7; text-align:center; z-index:1000; user-select:none; font-weight:500; text-shadow:0 0 6px rgba(255,110,196,0.8); min-width:300px; }
+
+.music-indicator { position:fixed; bottom:22px; right:22px; font-size:1.3rem; opacity:0.5; transition:0.2s; z-index:1100; cursor:pointer; }
+.music-indicator:hover { opacity:1; transform:scale(1.2); }
+
+@media(max-width:600px){
+  .card { margin:60px 20px 30px 20px; padding:30px 20px; }
+  .work-section { padding:30px 10px; }
+  .fixed-links { flex-wrap:wrap; padding:10px 15px; gap:12px; max-width:95vw; }
+  .fixed-links a { padding:8px 12px; font-size:0.9rem; }
+  .footer-info { font-size:0.8rem; padding:0 10px; max-width:95vw; }
+}
+/* FORCE CONSISTENT IMAGE SIZE */
+.work-item {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.work-item img {
+  width: 100%;
+  height: 160px;          /* controls image height */
+  object-fit: cover;      /* crops instead of stretching */
+  object-position: center;
+  flex-shrink: 0;
+}
+
+.work-item p {
+  margin-top: auto;
+}
+/* Image Zoom Overlay */
+.image-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.image-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-overlay img {
+  max-width: 95vw;
+  max-height: 95vh;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(255,110,196,0.8);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Make images look clickable */
+.work-item img {
+  cursor: zoom-in;
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+<div class="circle c4"></div>
+
+<div class="card fade-in">
+  <img src="https://cdn.discordapp.com/avatars/735676175514468382/af8ff08f58e85debcce69660bc5a367b.webp?" class="pfp glow" alt="Gaming Discord Profile" />
+  <h1>Gaming</h1>
+  <p class="role">Graphics & Discords</p>
+  <p class="desc">
+    Hey! I’m Gaming. I make Discord server setups and custom banners. I work only for Robux, keep prices affordable, deliver fast, and make sure everything looks clean. I make what the customer wants.
+    <br /><br />Since October 14, 2024.
+  </p>
+</div>
+
+<section class="work-section">
+  <h2>My Work</h2>
+  <div class="work-grid">
+    <!-- Graphics -->
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183755172057128/Alaska_3.png?ex=695bbc60&is=695a6ae0&hm=7b03813c1ac667c6d8e2dea24d3b1907337571b59e05b618367f0fe51f6f9a85&=&format=webp&quality=lossless&width=1715&height=432" alt="Graphic" /><p>Graphics Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183755990073537/Miami_Banner.png?ex=695bbc60&is=695a6ae0&hm=a80d9379ccfe9fb15efab224b914802552021eadb5303de2f0a02ae08f858b92&=&format=webp&quality=lossless&width=1715&height=515" alt="Graphic" /><p>Graphics Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183756749373470/Alaska_2.png?ex=695bbc60&is=695a6ae0&hm=a9937a2fc5418f74495ae713abc15b8ec78b9694e0b74c177f81e94d43b741be&=&format=webp&quality=lossless&width=1715&height=515" alt="Graphic" /><p>Graphics Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183757319667774/Alaska_Banner.png?ex=695bbc60&is=695a6ae0&hm=a4783254209906c90122f8e053e8f789bbc8121d890b2ab0499f174391df2aaf&=&format=webp&quality=lossless&width=1715&height=515" alt="Graphic" /><p>Graphics Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183757932167188/Showcase6.png?ex=695bbc61&is=695a6ae1&hm=90bfadc443d0db9d389a72c7c30bf2b3f678d400cd1d39481261e9ff79cea618&=&format=webp&quality=lossless&width=1715&height=515" alt="Graphic" /><p>Graphics Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457183758527627418/image5.jpg?ex=695bbc61&is=695a6ae1&hm=781a54a969ed19c24c0e56f0b51ec9a48be65d63e33ae0953e5da705c82160b2&=&format=webp&width=1089&height=300" alt="Graphic" /><p>Graphics Example</p></div>
+
+    <!-- Discord examples -->
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457188166090887383/9381F52D-F76E-435E-90BF-C47EBD63B7DB.jpg?ex=695bc07c&is=695a6efc&hm=b986eff3c2e2a4b5f1ae65a8640c674ed5f4bb12dcc6c969fe10e849b293166f&=&format=webp&width=420&height=830" alt="Discord" /><p> Roles Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457188164778197015/F718B105-FFE6-486B-BBD8-560DD54B1022.jpg?ex=695bc07b&is=695a6efb&hm=04bbb854fdf1b62f2b9a006199faa4114c23cb1fb68e1d6a24e0b840d07ac077&=&format=webp&width=383&height=734" alt="Discord" /><p>Channel Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://cdn.discordapp.com/attachments/1456861175470886993/1457188165105225860/7BBE3617-5116-49B7-B58A-C94C7A51316F.jpg?ex=695bc07b&is=695a6efb&hm=551561f0e9145edb57ea4bd78505ab06c36a82118f0b7ebcf76d27342c726393&" alt="Discord" /><p>Channel Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457188165445095549/4E04AC71-8863-4C7C-BCF1-7F962E369613.jpg?ex=695bc07b&is=695a6efb&hm=9133eff36463ce1d83d0318b388a1547d1efd2618aed228331c7ac039fdd4a07&=&format=webp&width=443&height=736" alt="Discord" /><p>Roles Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://media.discordapp.net/attachments/1456861175470886993/1457529195243638815/IMG_3067.png?ex=695cfe17&is=695bac97&hm=aab0b1c90796097d308de1a8aee80bed836205cbb65265253c2ebe8b546682bc&=&format=webp&quality=lossless&width=617&height=877" alt="Discord" /><p>Embed Example</p></div>
+    <div class="work-item fade-in-delay"><img src="https://cdn.discordapp.com/attachments/1456861175470886993/1457529617232560290/image0.jpg?ex=695cfe7c&is=695bacfc&hm=fc9278a34c23edbc8c6cddd0f26d4778b063113fca43ec2d8b1f35ac4d986e74" alt="Discord" /><p>Channels Example</p></div>
+
+  </div>
+</section>
+
+<div class="fixed-links">
+  <a href="https://www.roblox.com/users/1742909650/profile" target="_blank" rel="noopener noreferrer">
+    <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/0/e/e/0eeeb19633422b1241f4306419a0f15f39d58de9.png" alt="Roblox Logo" class="btn-logo" /> Roblox
+  </a>
+  <a href="https://discord.com/channels/@me/1457148066804011257" target="_blank" rel="noopener noreferrer">
+    <img src="https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png" alt="Discord Logo" class="btn-logo" /> Discord
+  </a>
+</div>
+
+<div class="footer-info" id="footer-info">
+  All rights reserved. Views: 0 | EST Time: --
+</div>
+
+<!-- Background Music -->
+<audio id="bg-music" loop>
+  <source src="C:\Users\jacki\Downloads\Lil_Baby_-_Grace_(mp3.pm).mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-indicator" title="Now Playing: Grace">Play Music ♪</div>
+
+<!-- Background Music -->
+<audio id="bg-music" loop autoplay muted preload="auto">
+  <source src="grace.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const footerInfo = document.getElementById('footer-info');
+  const storageKey = 'visitorCount';
+  let count = parseInt(localStorage.getItem(storageKey) || '0', 10);
+  count++; localStorage.setItem(storageKey, count);
+
+  function getESTTimeString() {
+    try { return new Intl.DateTimeFormat([], { timeZone:'America/New_York', hour12:true, hour:'2-digit', minute:'2-digit', second:'2-digit' }).format(new Date()); } 
+    catch { return '--'; }
+  }
+
+  function updateFooter() {
+    const timeStr = getESTTimeString();
+    footerInfo.textContent = `All rights reserved. Views: ${count} | EST Time: ${timeStr}`;
+  }
+  updateFooter();
+  setInterval(updateFooter, 1000);
+
+  const music = document.getElementById("bg-music");
+  const indicator = document.querySelector(".music-indicator");
+  music.volume = 0;
+
+  indicator.addEventListener("click", () => {
+    music.play();
+    let v=0;
+    const fade = setInterval(()=>{
+      if(v<0.15){ v+=0.01; music.volume=v; } else clearInterval(fade);
+    },120);
+    setInterval(()=>{ indicator.style.transform=`scale(${1+Math.random()*0.2})`; },400);
+  }, { once:true });
+
+</script>
+<div class="image-overlay" id="imageOverlay">
+  <img src="" alt="Zoomed Image">
+</div>
+
+<script>
+  const overlay = document.getElementById("imageOverlay");
+  const overlayImg = overlay.querySelector("img");
+
+  document.querySelectorAll(".work-item img").forEach(img => {
+    img.addEventListener("click", () => {
+      overlayImg.src = img.src;
+      overlay.classList.add("active");
+    });
+  });
+
+  // Close on click
+  overlay.addEventListener("click", () => {
+    overlay.classList.remove("active");
+    overlayImg.src = "";
+  });
+
+  // Close on ESC
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      overlay.classList.remove("active");
+      overlayImg.src = "";
+    }
+  });
+</script>
+
+
+</body>
+</html>
